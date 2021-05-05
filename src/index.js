@@ -30,4 +30,28 @@ document.addEventListener("DOMContentLoaded", () => {
     <button class='like-btn' id = ${object.id}>like <3</button>`
     toyCollection.appendChild(cardDiv)
   }
+  
+  const addToyForm = document.querySelector('form')
+  
+  addToyForm.addEventListener('submit', (event) => {
+    event.preventDefault()
+    postToy(event)
+  })
+  
+  
+  function postToy(event){
+    const newToy = {name: event.target.querySelectorAll('input')[0].value,
+    image: event.target.querySelectorAll('input')[1].value}
+    
+    fetch('http://localhost:3000/toys/', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newToy),
+    })
+    .then(res => res.json())
+    .then((newToyObj) => createCard(newToyObj))
+    
+  }
 });
