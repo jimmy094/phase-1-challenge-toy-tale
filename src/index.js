@@ -12,4 +12,22 @@ document.addEventListener("DOMContentLoaded", () => {
       toyFormContainer.style.display = "none";
     }
   });
+
+  fetch('http://localhost:3000/toys/')
+  .then(res => res.json())
+  .then(toyArray => {
+    toyArray.forEach((cardObj) => createCard(cardObj)
+  )})
+
+
+  function createCard (object) {
+    const toyCollection = document.querySelector('#toy-collection')
+    const cardDiv = document.createElement('div')
+    cardDiv.className = 'card'
+    cardDiv.innerHTML = `<h2>${object.name}</h2> 
+    <img src=${object.image} class='toy-avatar'/>
+    <p>${object.likes} likes</p>
+    <button class='like-btn' id = ${object.id}>like <3</button>`
+    toyCollection.appendChild(cardDiv)
+  }
 });
